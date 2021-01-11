@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1610351795967" clover="3.2.0">
+  <project timestamp="1610351795967" name="All files">
+    <metrics statements="37" coveredstatements="18" conditionals="10" coveredconditionals="0" methods="11" coveredmethods="2" elements="58" coveredelements="20" complexity="0" loc="37" ncloc="37" packages="2" files="3" classes="3"/>
+    <package name="Controllers">
+      <metrics statements="33" coveredstatements="14" conditionals="10" coveredconditionals="0" methods="11" coveredmethods="2"/>
+      <file name="productController.js" path="C:\Users\aman9\OneDrive\Desktop\Online Shopping\Node-learning\server\Controllers\productController.js">
+        <metrics statements="31" coveredstatements="12" conditionals="10" coveredconditionals="0" methods="10" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="43" count="1" type="stmt"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="48" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+      </file>
+      <file name="sumController.js" path="C:\Users\aman9\OneDrive\Desktop\Online Shopping\Node-learning\server\Controllers\sumController.js">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="Models">
+      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="productModels.js" path="C:\Users\aman9\OneDrive\Desktop\Online Shopping\Node-learning\server\Models\productModels.js">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

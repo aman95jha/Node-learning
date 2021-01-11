@@ -1,11 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cart = require("../Models/shoppingCart");
-const requirelogin = require("../connect/reuirelogin");
+const requirelogin = require("../connect/requirelogin");
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-router.post("/cart", requirelogin, jsonParser, (req, res) => {
+const createCart = (req, res) => {
   const user = req.body.user;
   const item = {
     product: req.body.product,
@@ -40,9 +40,9 @@ router.post("/cart", requirelogin, jsonParser, (req, res) => {
       }).then(() => res.end());
     }
   });
-});
+};
 
-router.get("/cart", requirelogin, (req, res) => {
+const getCart = (req, res) => {
   Cart.findOne({ user: req.user.id })
     .populate("items.product")
     .exec((err, cart) => {
@@ -52,21 +52,26 @@ router.get("/cart", requirelogin, (req, res) => {
 
       res.send(cart);
     });
-});
+};
 
-router.put("/cart/:productId", requirelogin, jsonParser, (req, res) => {
+const updateCart = (req, res) => {
   Cart.findById(req.body.cartId).then((foundCart) => {
     foundCart.items = foundCart.items.filter(
       (item) => item._id != req.body.itemId
     );
     foundCart.save(() => res.end());
   });
-});
+};
 
-router.delete("/cart/:productId", requirelogin, (req, res) => {
+const deleteCart = (req, res) => {
   Cart.findByIdAndRemove(req.query.id)
     .then(() => res.end())
     .catch((err) => res.send(err));
-});
+};
 
-module.exports = router;
+module.exports = {
+  createCart: createCart,
+  getCart: getCart,
+  updateCart: updateCart,
+  deleteCart: deleteCart,
+};

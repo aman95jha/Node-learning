@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 const productSchema = require("../Models/productModels");
+const { request } = require("express");
 
 // For products creating
-router.post("/products", function (req, res, next) {
+const createProduct = (req, res, next) => {
   productSchema.create(req.body, (error, data) => {
     if (error) {
       return next(error);
@@ -13,10 +14,10 @@ router.post("/products", function (req, res, next) {
       res.json(data);
     }
   });
-});
+};
 
 //For getting all products
-router.get("/allproducts", function (req, res) {
+const getAllProduct = (req, res) => {
   productSchema.find((error, data) => {
     if (error) {
       return next(error);
@@ -25,10 +26,10 @@ router.get("/allproducts", function (req, res) {
       console.log(data);
     }
   });
-});
+};
 
 //for getting products by id
-router.get("/products/:id", function (req, res) {
+const getById = (req, res) => {
   productSchema.findById(req.params.id, (error, data) => {
     if (error) {
       return next(error);
@@ -36,10 +37,10 @@ router.get("/products/:id", function (req, res) {
       res.json(data);
     }
   });
-});
+};
 
 //for updating product by id
-router.put("/products/:id", function (req, res, next) {
+const updateById = (req, res, next) => {
   productSchema.findByIdAndUpdate(
     req.params.id,
     { $set: req.body },
@@ -48,14 +49,20 @@ router.put("/products/:id", function (req, res, next) {
       res.send("Product udpated.");
     }
   );
-});
+};
 
 // for deleting product by id
-router.delete("/products/:id", function (req, res, next) {
+const deleteById = (req, res, next) => {
   productSchema.findByIdAndRemove(req.params.id, function (err) {
     if (err) return next(err);
     res.send("Deleted successfully!");
   });
-});
+};
 
-module.exports = router;
+module.exports = {
+  createProduct: createProduct,
+  getAllProduct: getAllProduct,
+  getById: getById,
+  updateById: updateById,
+  deleteById: deleteById,
+};

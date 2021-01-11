@@ -2,71 +2,75 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const userReg = require("../Models/userReg.js");
 const config = require("../Config/secret");
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { notify } = require("../Routes/users.js");
+const { response } = require("express");
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-/*router.post('/loginSetup',(req,res)=>{
-    var newUser=userLogin({
-        userName:"jha@gmai;.com",
-        password:"aman123"
-    });
-    newUser.save(function(err,user){
-        if(err){
-            res.send({message:"Error 404"});
-        }else if(user){
-            res.send({message:"Saved successfully"});
-        }else{
-            res.send({message:"Unable to save user"});
-        }
-    });
-});*/
-router.post("/reg", (req, res) => {
-  const {
-    firstName,
-    lastName,
-    userName,
-    password,
-    phnNo,
-    address,
-    state,
-    city,
-    pincode,
-  } = req.body;
-  const newUser = userReg({
-    firstName: firstName,
-    lastName: lastName,
-    userName: userName,
-    password: bcrypt.hashSync(password, 8),
-    phnNo: phnNo,
-    address: address,
-    state: state,
-    city: city,
-    pincode: pincode,
-  });
-  userReg
-    .findOne({ userName: userName })
-    .then((user) => {
-      if (user) {
-        res.send({ message: "UserName already exists" });
-      } else {
-        newUser
-          .save()
-          .then((result) => {
-            if (result) {
-              res.send({ message: true });
-            } else {
-              res.send({ message: false });
-            }
-          })
-          .catch((err) => res.send({ message: err.message }));
-      }
-    })
-    .catch((err) => res.send({ message: err.message }));
-});
 
-router.post("/login", (req, res) => {
+const userRegister = async (req, res) => {
+  //  1. first will check useer is registered or not
+  //  2.if user registered the display user userFound
+  //  4.if user not found then we should register the user
+  //  5. create user instance
+  //  6 save the user instance
+  //  7.if saved response with saved user id
+  //  8. if not saved send response with error
+
+  try {
+    const {
+      firstName,
+      lastName,
+      userName,
+      password,
+      phnNo,
+      address,
+      state,
+      city,
+      pincode,
+    } = req.body;
+
+    // 1
+    const userFound = await userReg.findOne({ userName: userName });
+
+    //2
+    if (userFound) {
+      return res.send({
+        error: "User already registered",
+      });
+    }
+    //3
+    const newUser = userReg({
+      firstName: firstName,
+      lastName: lastName,
+      userName: userName,
+      password: bcrypt.hashSync(password, 8),
+      phnNo: phnNo,
+      address: address,
+      state: state,
+      city: city,
+      pincode: pincode,
+    });
+    //4
+    const userSaved = await newUser.save();
+    if (!userSaved) {
+      return res.send({
+        error: " Something went wrong",
+      });
+    }
+
+    return res.send({
+      message: "successfully registered",
+      userInfo: userSaved,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const userLogin = (req, res) => {
   userReg
     .findOne({ userName: req.body.userName.trim() })
     .then((user) => {
@@ -84,8 +88,9 @@ router.post("/login", (req, res) => {
       }
     })
     .catch((err) => res.send({ message: "Error in finding the user " }));
-});
-router.get("/getUser/:name", (req, res) => {
+};
+
+const getUser = (req, res) => {
   userReg
     .find({ userName: req.params.name })
     .then((result) => {
@@ -94,8 +99,8 @@ router.get("/getUser/:name", (req, res) => {
     .catch((err) => {
       res.send(err);
     });
-});
-router.put("/updateDetails", (req, res) => {
+};
+const updateUser = (req, res) => {
   userReg.findOne({ userName: req.body.userName }, (err, user) => {
     if (err) {
       res.send({ success: false, message: "Not a valid user" });
@@ -116,10 +121,11 @@ router.put("/updateDetails", (req, res) => {
       });
     }
   });
-});
+};
 
-router.get("/", function (req, res) {
-  res.json("Just for final check");
-});
-
-module.exports = router;
+module.exports = {
+  userRegister: userRegister,
+  userLogin: userLogin,
+  getUser: getUser,
+  updateUser: updateUser,
+};

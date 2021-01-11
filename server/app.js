@@ -1,21 +1,18 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
-const userController = require("./Controllers/userController.js");
-const shoppingCartController = require("./Controllers/shoppingCartController.js");
-const productController = require("./Controllers/productController");
-app.set("port", 8000);
+const apiRoutes = require("./Routes/index");
+
+app.set("port", process.env.MY_WEBISTE_PORT);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
-app.use("/user", userController);
-app.use("/api", shoppingCartController);
-app.use("/api", productController);
-const config = require("./Config");
+app.use("/api", apiRoutes);
 
-mongoose.connect(config.getDbConnectionString(), {
+mongoose.connect(process.env.MONGO_URL, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
