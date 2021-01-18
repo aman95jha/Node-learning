@@ -6,11 +6,25 @@ const app = express();
 const bodyParser = require("body-parser");
 const apiRoutes = require("./Routes/index");
 
+app.use(cors());
 app.set("port", process.env.MY_WEBISTE_PORT);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 app.use("/api", apiRoutes);
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "DELETE, PUT");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  if ("OPTIONS" === req.method) {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 
 mongoose.connect(process.env.MONGO_URL, {
   useCreateIndex: true,
