@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+
+/* Admin css */
+.page-wrapper {
+  display: flex;
+}
+
+.sidenav {
+  width: 230px;
+  background-color: #eee;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav .userInfo {
+  padding: 30px 0px;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.appbar {
+  background-color: burlywood;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Admin css */
